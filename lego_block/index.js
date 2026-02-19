@@ -1,19 +1,20 @@
 const canvas = document.querySelector(".canvas");
 const ctx = canvas.getContext("2d");
 
-ctx.translate(canvas.height / 2, canvas.height / 2);
+ctx.translate(canvas.width / 2, canvas.height / 2);
+const halfBox = 25;
 drawBox();
 
 function drawBox() {
   ctx.beginPath();
-  ctx.rect(-25, -25, 50, 50);
+  ctx.rect(-halfBox, -halfBox, 50, 50);
   ctx.strokeStyle = "black";
   ctx.stroke();
   ctx.fillStyle = "red";
   ctx.fill();
 }
 
-document.addEventListener("mousedown", async (e) => {
+document.addEventListener("mousemove", (e) => {
   ctx.clearRect(
     -canvas.width / 2,
     -canvas.height / 2,
@@ -22,8 +23,15 @@ document.addEventListener("mousedown", async (e) => {
   );
 
   ctx.save();
-  const x = (Math.random() - 0.5) * 200;
-  const y = (Math.random() - 0.5) * 200;
+  const canvasRect = canvas.getBoundingClientRect();
+  let x = e.clientX - canvas.width / 2 - canvasRect.left;
+  let y = e.clientY - canvas.height / 2 - canvasRect.top;
+
+  x = Math.min(x, canvas.width / 2) - 50;
+  x = Math.max(x, -canvas.width / 2) + 25;
+  y = Math.min(y, canvas.height / 2) - 50;
+  y = Math.max(y, -canvas.height / 2) + 25;
+
   ctx.translate(x, y);
 
   drawBox();
