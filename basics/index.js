@@ -39,7 +39,7 @@ class Particle {
       "rgba(255,255,255, 1)",
     ];
     const color = colors[Math.floor(Math.random() * colors.length)];
-    ctx.fillStyle = color; //"rgb(0,0,255)";
+    ctx.fillStyle = "rgb(255,255,255)";
     ctx.fill();
   }
 }
@@ -68,13 +68,15 @@ document.addEventListener("click", (e) => {
 document.addEventListener("mousemove", (e) => {
   mouse["x"] = e.x;
   mouse["y"] = e.y;
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 3; i++) {
     particlesArray.push(new Particle());
   }
 });
 
 function animate() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  //   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "rgba(0,0,0,0.1";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
   handleParticles();
   requestAnimationFrame(animate);
 }
