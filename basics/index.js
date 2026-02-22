@@ -15,7 +15,7 @@ class Particle {
     // this.y = mouse.y;
     this.x = Math.random() * canvas.width;
     this.y = Math.random() * canvas.height;
-    this.size = Math.random() * 6 + 1;
+    this.size = Math.random() * 16 + 1;
     this.speedX = Math.random() * 3 - 1.5;
     this.speedY = Math.random() * 3 - 1.5;
   }
@@ -23,6 +23,7 @@ class Particle {
   update() {
     this.x += this.speedX;
     this.y += this.speedY;
+    if (this.size > 0.2) this.size -= 0.1;
   }
 
   draw() {
@@ -54,6 +55,14 @@ function handleParticles() {
   for (let i = 0; i < particlesArray.length; i++) {
     particlesArray[i].update();
     particlesArray[i].draw();
+    if (particlesArray[i].size <= 0.3) {
+      particlesArray.splice(i, 1);
+      console.log(particlesArray.length);
+      i--;
+    }
+    if (particlesArray.length < 1) {
+      init();
+    }
   }
 }
 
