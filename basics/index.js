@@ -4,6 +4,7 @@ canvas.height = window.innerHeight;
 const ctx = canvas.getContext("2d");
 
 const particlesArray = [];
+let hue = 0;
 
 const mouse = {
   x: undefined,
@@ -18,6 +19,7 @@ class Particle {
     this.size = Math.random() * 16 + 1;
     this.speedX = Math.random() * 3 - 1.5;
     this.speedY = Math.random() * 3 - 1.5;
+    this.color = `hsl(${hue},100%,50%)`;
   }
 
   update() {
@@ -29,17 +31,8 @@ class Particle {
   draw() {
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
-    const colors = [
-      "rgba(0,0,255, 0.5)",
-      "rgba(0,0,255, 0.4)",
-      "rgba(0,0,255, 0.7)",
-      "rgba(0,0,255,1)",
-      "rgba(255,255,255, 0.5)",
-      "rgba(255,255,255, 0.8)",
-      "rgba(255,255,255, 1)",
-    ];
-    const color = colors[Math.floor(Math.random() * colors.length)];
-    ctx.fillStyle = "rgb(255,255,255)";
+
+    ctx.fillStyle = this.color;
     ctx.fill();
   }
 }
@@ -75,9 +68,10 @@ document.addEventListener("mousemove", (e) => {
 
 function animate() {
   //   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = "rgba(0,0,0,0.1";
+  ctx.fillStyle = "rgba(0,0,0,0.02";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   handleParticles();
+  hue++;
   requestAnimationFrame(animate);
 }
 animate();
