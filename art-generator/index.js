@@ -1,3 +1,5 @@
+import { generateRandomRGBA, generateRandomArcParams } from "../helper.js";
+
 // add canvas element
 const canvasElement = document.createElement("canvas");
 document.body.appendChild(canvasElement);
@@ -17,22 +19,7 @@ function drawCircle() {
   ctx.beginPath();
   const { randRadius, randX, randY } = generateRandomArcParams();
   ctx.arc(randX, randY, randRadius, 0, 2 * Math.PI);
-  ctx.fillStyle = generateRandomColor();
+  ctx.fillStyle = generateRandomRGBA();
   ctx.fill();
   ctx.restore();
-}
-
-function generateRandomArcParams() {
-  const randRadius = Math.min(50, Math.floor(Math.random() * 50) + 20);
-  const randX = Math.min(Math.floor(Math.random() * 400) + 1, 400);
-  const randY = Math.min(Math.floor(Math.random() * 400) + 1, 400);
-  return { randRadius, randX, randY };
-}
-
-function generateRandomColor() {
-  const randR = Math.floor(Math.random() * 255) + 1;
-  const randG = Math.floor(Math.random() * 255) + 1;
-  const randB = Math.floor(Math.random() * 255) + 1;
-  const randA = Math.random();
-  return `rgba(${randR}, ${randG}, ${randB}, ${randA})`;
 }
