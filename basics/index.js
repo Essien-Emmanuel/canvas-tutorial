@@ -3,32 +3,78 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 const ctx = canvas.getContext("2d");
 
+const particlesArray = [];
+
 const mouse = {
   x: undefined,
   y: undefined,
 };
+class Particle {
+  constructor() {
+    // this.x = mouse.x;
+    // this.y = mouse.y;
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.size = Math.random() * 6 + 1;
+    this.speedX = Math.random() * 3 - 1.5;
+    this.speedY = Math.random() * 3 - 1.5;
+  }
+
+  update() {
+    this.x += this.speedX;
+    this.y += this.speedY;
+  }
+
+  draw() {
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
+    const colors = [
+      "rgba(0,0,255, 0.5)",
+      "rgba(0,0,255, 0.4)",
+      "rgba(0,0,255, 0.7)",
+      "rgba(0,0,255,1)",
+      "rgba(255,255,255, 0.5)",
+      "rgba(255,255,255, 0.8)",
+      "rgba(255,255,255, 1)",
+    ];
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    ctx.fillStyle = "rgb(0,0,255)";
+    ctx.fill();
+  }
+}
+
+function init() {
+  for (let i = 0; i < 100; i++) {
+    particlesArray.push(new Particle());
+  }
+}
+init();
+
+function handleParticles() {
+  for (let i = 0; i < particlesArray.length; i++) {
+    particlesArray[i].update();
+    particlesArray[i].draw();
+  }
+}
 
 document.addEventListener("resize", () => {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
-  drawCircle(mouse.x, mouse.y);
 });
 
 document.addEventListener("click", (e) => {
   mouse["x"] = e.x;
   mouse["y"] = e.y;
-  drawCircle();
 });
 
 document.addEventListener("mousemove", (e) => {
   mouse["x"] = e.x;
   mouse["y"] = e.y;
-  drawCircle();
 });
 
-function drawCircle() {
-  ctx.fillStyle = "blue";
-  ctx.beginPath();
-  ctx.arc(mouse.x, mouse.y, 10, 0, 2 * Math.PI);
-  ctx.fill();
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  handleParticles();
+  requestAnimationFrame(animate);
 }
+animate();
