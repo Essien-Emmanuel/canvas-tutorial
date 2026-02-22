@@ -11,10 +11,10 @@ const mouse = {
 };
 class Particle {
   constructor() {
-    // this.x = mouse.x;
-    // this.y = mouse.y;
-    this.x = Math.random() * canvas.width;
-    this.y = Math.random() * canvas.height;
+    // this.x = Math.random() * canvas.width;
+    // this.y = Math.random() * canvas.height;
+    this.x = mouse.x;
+    this.y = mouse.y;
     this.size = Math.random() * 16 + 1;
     this.speedX = Math.random() * 3 - 1.5;
     this.speedY = Math.random() * 3 - 1.5;
@@ -39,17 +39,10 @@ class Particle {
       "rgba(255,255,255, 1)",
     ];
     const color = colors[Math.floor(Math.random() * colors.length)];
-    ctx.fillStyle = "rgb(0,0,255)";
+    ctx.fillStyle = color; //"rgb(0,0,255)";
     ctx.fill();
   }
 }
-
-function init() {
-  for (let i = 0; i < 100; i++) {
-    particlesArray.push(new Particle());
-  }
-}
-init();
 
 function handleParticles() {
   for (let i = 0; i < particlesArray.length; i++) {
@@ -57,11 +50,7 @@ function handleParticles() {
     particlesArray[i].draw();
     if (particlesArray[i].size <= 0.3) {
       particlesArray.splice(i, 1);
-      console.log(particlesArray.length);
       i--;
-    }
-    if (particlesArray.length < 1) {
-      init();
     }
   }
 }
@@ -79,6 +68,9 @@ document.addEventListener("click", (e) => {
 document.addEventListener("mousemove", (e) => {
   mouse["x"] = e.x;
   mouse["y"] = e.y;
+  for (let i = 0; i < 10; i++) {
+    particlesArray.push(new Particle());
+  }
 });
 
 function animate() {
