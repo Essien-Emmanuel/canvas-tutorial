@@ -28,10 +28,15 @@ function drawTarget() {
   ctx.restore();
 }
 
+function drawSnake() {
+  drawSnakeHead();
+  drawSnakeBody();
+}
+
 function drawSnakeHead() {
   ctx.save();
   ctx.beginPath();
-  ctx.rect(10, 10, 10, 20);
+  ctx.rect(10, 10, 10, 17);
   ctx.fill();
   ctx.restore();
 }
@@ -39,5 +44,6 @@ function drawSnakeHead() {
 function drawSnakeBody() {
   ctx.save();
   ctx.beginPath();
-  ctx.rect();
+  ctx.rect(20, 13.5, 10, 10);
+  ctx.fill();
 }
